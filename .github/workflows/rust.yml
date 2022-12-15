@@ -24,6 +24,6 @@ jobs:
     - name: Build
       run: cargo build --workspace |& tee cargo-build.log
     - name: Check warnings
-      run: grep "warning:" cargo-build.log &> /dev/null && echo "::warning::There were Rust compiler warnings" || true
+      run: grep "warning:" cargo-build.log &> /dev/null && echo "::error::There were Rust compiler warnings" || true
     - name: Run tests
       run: cargo test --workspace
