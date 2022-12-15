@@ -23,9 +23,9 @@ jobs:
         override: true
     - name: Build
       run: cargo build --workspace |& tee cargo-build.log
-    - name: Grep log short
-      run: grep -Fe "warning" cargo-build.log
-    - name: Grep log
-      run: grep -Fe "warning:" cargo-build.log
-    - name: Grep log with status
-      run: grep -Fe "warning:" cargo-build.log ; echo $?
+    - name: Check warnings
+      run: |
+        num_warnings=$(grep --color=never -oE "generated [0-9]+ warnings?" cargo-build.log)
+        [ -n "$num_warnings" ] && echo "::error::Cargo build $num_warnings" || true
+    - name: Run tests
+      run: cargo test --workspace
