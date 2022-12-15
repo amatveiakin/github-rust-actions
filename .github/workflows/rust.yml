@@ -24,8 +24,8 @@ jobs:
     - name: Build
       run: cargo build --workspace |& tee cargo-build.log
     - name: Grep log short
-      run: grep "warning" cargo-build.log
+      run: grep -e "warning" cargo-build.log
     - name: Grep log
-      run: grep "warning:" cargo-build.log
+      run: grep -e "warning:" cargo-build.log
     - name: Grep log with status
-      run: grep "warning:" cargo-build.log ; echo $?
+      run: grep -e "warning:" cargo-build.log ; echo $?
