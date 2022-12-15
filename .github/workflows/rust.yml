@@ -23,7 +23,9 @@ jobs:
         override: true
     - name: Build
       run: cargo build --workspace |& tee cargo-build.log
-    - name: Check warnings
-      run: bash -c 'grep "warning:" cargo-build.log &> /dev/null && echo "::error::There were Rust compiler warnings" || true'
-    - name: Run tests
-      run: cargo test --workspace
+    - name: Grep log short
+      run: grep "warning" cargo-build.log
+    - name: Grep log
+      run: grep "warning:" cargo-build.log
+    - name: Grep log with status
+      run: grep "warning:" cargo-build.log ; echo $?
