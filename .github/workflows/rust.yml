@@ -16,24 +16,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Warning 1
-      run: echo "::warning::AAA"
-    - name: Warning 2
-      run: echo "::warning ::BBB"
-    - name: Warning 3
-      run: echo "::warning title=TTT::CCC"
-    # - name: Install latest Rust
-    #   uses: actions-rs/toolchain@v1
-    #   with:
-    #     toolchain: stable
-    #     override: true
-    # - name: Build
-    #   run: cargo build --workspace |& tee cargo-build.log
-    # - name: View log
-    #   run: cat cargo-build.log
-    # - name: Grep log
-    #   run: grep "warning" cargo-build.log
-    # - name: Check warnings
-    #   run: grep "warning:" cargo-build.log && echo "::warning::There were Rust compiler warnings" || true
-    # - name: Run tests
-    #   run: cargo test --workspace
+    - name: Install latest Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+    - name: Build
+      run: cargo build --workspace |& tee cargo-build.log
+    - name: Check warnings
+      run: grep "warning:" cargo-build.log &> /dev/null && echo "::warning::There were Rust compiler warnings" || true
+    - name: Run tests
+      run: cargo test --workspace
